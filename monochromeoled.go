@@ -12,9 +12,6 @@ import (
 )
 
 const (
-	ssd1306LcdWidth  = 128
-	ssd1306LcdHeight = 32
-
 	// On or off registers.
 	ssd1306DisplayOn  = 0xAf
 	ssd1306DisplayOff = 0xAe
@@ -60,7 +57,7 @@ func (o *OLED) Init() (err error) {
 		0x00 | 0x00, // row offset
 		0x10 | 0x00, // column offset
 		0xd5, 0x80,
-		0xa8, ssd1306LcdHeight - 1,
+		0xa8, uint8(o.h - 1),
 		0xd3, 0x00, // set display offset to no offset
 		0x80 | 0,
 		0x8d, 0x14,
@@ -171,7 +168,7 @@ func (o *OLED) Draw() error {
 	if err := o.dev.Write([]byte{
 		0xa4,     // write mode
 		0x40 | 0, // start line = 0
-		0x21, 0, ssd1306LcdWidth,
+		0x21, 0, uint8(o.w),
 		0x22, 0, 7,
 	}); err != nil { // the write mode
 		return err
