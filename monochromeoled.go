@@ -78,7 +78,7 @@ func (o *OLED) Init() (err error) {
 	if o.h == 64 {
 		err = o.dev.Write([]byte{
 			0xda, 0x12,
-			0x81, 0x9f, // set contrast
+			0x81, 0x7f, // set contrast
 		})
 	}
 	err = o.dev.Write([]byte{
